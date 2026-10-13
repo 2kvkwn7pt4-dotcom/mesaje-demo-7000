@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mesaje — demonstrație</title>
+<style>
+:root{color-scheme:dark;--bg:#000;--panel:#1c1c1e;--muted:#8e8e93;--line:#333337;--blue:#0a84ff;--green:#30d158}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:520px;min-height:100dvh;margin:auto;display:flex;flex-direction:column;background:#000}
+.demo{padding:8px 14px;text-align:center;background:#392b0c;color:#ffd66b;font-size:12px;letter-spacing:.2px}
+header{padding:18px 18px 10px;display:flex;align-items:center;justify-content:space-between}
+button{font:inherit;cursor:pointer}
+.pill{border:1px solid #333;background:#222;color:#fff;border-radius:24px;padding:10px 15px}
+h1{font-size:36px;margin:20px 18px 14px;font-weight:750}
+.search{margin:0 16px 14px;padding:10px 12px;background:#1c1c1e;border-radius:12px;color:var(--muted)}
+.thread{display:flex;align-items:center;gap:13px;padding:15px 18px;border-bottom:1px solid var(--line);cursor:pointer}
+.avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(#59516f,#302744);display:grid;place-items:center;font-size:23px;font-weight:600;flex-shrink:0}
+.threadtext{min-width:0;flex:1}
+.name-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.name{font-size:18px;font-weight:650}
+.time{font-size:13px;color:var(--muted);white-space:nowrap}
+.preview{font-size:14px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bottomnav{margin-top:auto;display:flex;gap:12px;padding:12px 16px calc(16px + env(safe-area-inset-bottom));}
+.bottomnav button{flex:1;padding:13px;border:1px solid #333;border-radius:28px;background:#202023;color:#fff}
+.hidden{display:none!important}
+.chathead{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #222}
+.back{border:0;background:transparent;color:var(--blue);font-size:17px;padding:8px 0}
+.contact{display:flex;align-items:center;flex-direction:column;gap:5px;font-size:14px;font-weight:600}
+.smallavatar{width:38px;height:38px;border-radius:50%;background:#464052;display:grid;place-items:center;font-weight:700}
+.chatbody{padding:18px 14px;display:flex;flex-direction:column;gap:12px;flex:1;overflow:auto}
+.date{text-align:center;color:var(--muted);font-size:12px;margin:5px 0 10px}
+.bubble{max-width:82%;padding:10px 14px;border-radius:19px;font-size:16px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere}
+.incoming{align-self:flex-start;background:#262629;border-bottom-left-radius:6px}
+.outgoing{align-self:flex-end;background:#087eff;border-bottom-right-radius:6px}
+.note{font-size:11px;color:#ffd66b;text-align:center;margin:0 12px 8px}
+.composer{display:flex;align-items:center;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #222}
+.composer input{min-width:0;flex:1;background:#1c1c1e;border:1px solid #424246;border-radius:22px;padding:12px 15px;color:#fff;font-size:16px;outline:none}
+.send{width:42px;height:42px;border:0;border-radius:50%;background:var(--green);color:#000;font-size:20px;font-weight:700}
+.info{margin:12px 18px;color:var(--muted);font-size:12px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="demo">DEMO • SIMULARE VIZUALĂ — nu trimite SMS-uri și nu efectuează plăți</div>
+  <section id="listScreen">
+    <header><button class="pill" id="editBtn">Editați</button><button class="pill" id="menuBtn" aria-label="Meniu">☰</button></header>
+    <h1>Mesaje</h1>
+    <div class="search">⌕ &nbsp; Căutare</div>
+    <div class="thread" id="sevenThread">
+      <div class="avatar">7000</div>
+      <div class="threadtext">
+        <div class="name-row"><span class="name">7000</span><span class="time" id="previewTime">Acum</span></div>
+        <div class="preview" id="previewText">Serviciu SMS — apasă pentru a deschide conversația</div>
+      </div>
+      <span style="color:#666;font-size:24px">›</span>
+    </div>
+    <div class="thread" id="demoThread">
+      <div class="avatar">D</div>
+      <div class="threadtext">
+        <div class="name-row"><span class="name">Demonstrație</span><span class="time">—</span></div>
+        <div class="preview">Conversație de exemplu</div>
+      </div><span style="color:#666;font-size:24px">›</span>
+    </div>
+    <p class="info">Această pagină imită vizual o listă de mesaje. Nu este aplicația Apple Mesaje și nu are acces la SMS-urile reale de pe telefon.</p>
+    <div class="bottomnav"><button id="searchBtn">⌕ &nbsp; Căutare</button><button id="newBtn">✎ &nbsp; Mesaj nou</button></div>
+  </section>
+  <section id="chatScreen" class="hidden" style="flex:1;min-height:0;display:flex;flex-direction:column">
+    <div class="chathead">
+      <button class="back" id="backBtn">‹ Mesaje</button>
+      <div class="contact"><div class="smallavatar">7000</div><span>7000</span></div>
+      <button class="back" id="detailsBtn">Info</button>
+    </div>
+    <div class="chatbody" id="chatBody">
+      <div class="date">iMessage / SMS • demonstrație</div>
+      <div class="bubble incoming">Aceasta este o conversație demonstrativă. Mesajele de aici nu sunt trimise către numărul real 7000.</div>
+    </div>
+    <div class="note">SIMULARE: răspunsurile automate nu sunt confirmări oficiale de plată.</div>
+    <form class="composer" id="sendForm">
+      <input id="messageInput" autocomplete="off" placeholder="Mesaj SMS • demo" aria-label="Scrie un mesaj">
+      <button class="send" type="submit" aria-label="Trimite">↑</button>
+    </form>
+  </section>
+</div>
+<script>
+const listScreen=document.getElementById('listScreen'), chatScreen=document.getElementById('chatScreen');
+const body=document.getElementById('chatBody'), input=document.getElementById('messageInput');
+function openChat(){listScreen.classList.add('hidden');chatScreen.classList.remove('hidden');input.focus();}
+function back(){chatScreen.classList.add('hidden');listScreen.classList.remove('hidden');}
+document.getElementById('sevenThread').addEventListener('click',openChat);
+document.getElementById('demoThread').addEventListener('click',openChat);
+document.getElementById('backBtn').addEventListener('click',back);
+document.getElementById('editBtn').addEventListener('click',()=>alert('Modul Editare este doar decorativ în această demonstrație.'));
+document.getElementById('menuBtn').addEventListener('click',()=>alert('Meniu demonstrativ.'));
+document.getElementById('searchBtn').addEventListener('click',()=>alert('Căutarea în SMS-urile reale nu este disponibilă în această pagină.'));
+document.getElementById('newBtn').addEventListener('click',openChat);
+document.getElementById('detailsBtn').addEventListener('click',()=>alert('Număr: 7000 • Conversație demonstrativă, fără SMS real.'));
+function addBubble(text,cls){const el=document.createElement('div');el.className='bubble '+cls;el.textContent=text;body.appendChild(el);body.scrollTop=body.scrollHeight;}
+document.getElementById('sendForm').addEventListener('submit',e=>{
+ e.preventDefault(); const text=input.value.trim(); if(!text)return;
+ addBubble(text,'outgoing');input.value='';
+ const lower=text.toLowerCase();
+ let reply='Mesaj demonstrativ primit în această pagină. Nu s-a trimis niciun SMS real.';
+ if(/bord|troleibuz|bilet|plată|plata|7000/.test(lower)) reply='SIMULARE: acesta nu este un răspuns oficial al serviciului 7000. Pentru bilet real, folosește instrucțiunile operatorului de transport.';
+ setTimeout(()=>addBubble(reply,'incoming'),350);
+ document.getElementById('previewText').textContent=text;
+ document.getElementById('previewTime').textContent='Acum';
+});
+</script>
+</body>
+</html>
